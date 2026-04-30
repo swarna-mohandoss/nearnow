@@ -1,5 +1,5 @@
-const API = 'http://localhost:8080/api/events';
-const WS  = 'http://localhost:8080/ws';
+const API = window.location.origin + '/api/events';
+const WS = window.location.origin + '/ws';
 
 let map, stompClient, pinDropMode = false, tempMarker = null;
 let allMarkers = [];
@@ -61,7 +61,7 @@ function initMap() {
 }
 
 function connectWebSocket() {
-  const socket = new SockJS(WS);
+  const socket = new SockJS(window.location.origin + '/ws');
   stompClient = Stomp.over(socket);
   stompClient.debug = null;
   stompClient.connect({}, function() {
