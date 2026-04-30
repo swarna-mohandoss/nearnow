@@ -33,7 +33,7 @@ build/
 .vscode/
 
 # Sensitive config
-src/main/resources/application.properties
+
 
 # Eclipse misc
 *.class
