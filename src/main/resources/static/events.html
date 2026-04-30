@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NearNow — Events</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="events.css"/>
+</head>
+<body class="events-page">
+
+  <!-- HEADER -->
+  <div id="events-header">
+    <div id="events-brand">
+      <a href="index.html" id="back-btn">← Back to Map</a>
+      <h1>NEAR<span>NOW</span></h1>
+      <span id="live-badge">● LIVE</span>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="events-main">
+
+    <!-- FILTER BAR -->
+    <div id="events-filter-bar">
+      <div class="filter-group">
+        <span class="filter-group-label">Category</span>
+        <div class="filter-buttons">
+          <button class="filter-btn filter-active" style="--cat-color:#0d0d0d" onclick="toggleCatFilter('All',this)">All</button>
+          <button class="filter-btn" style="--cat-color:#8e24aa" onclick="toggleCatFilter('Music',this)">🎵 Music</button>
+          <button class="filter-btn" style="--cat-color:#e65100" onclick="toggleCatFilter('Food',this)">🍔 Food</button>
+          <button class="filter-btn" style="--cat-color:#2e7d32" onclick="toggleCatFilter('Sports',this)">⚽ Sports</button>
+          <button class="filter-btn" style="--cat-color:#1565c0" onclick="toggleCatFilter('Meetup',this)">🤝 Meetup</button>
+          <button class="filter-btn" style="--cat-color:#c62828" onclick="toggleCatFilter('Art',this)">🎨 Art</button>
+          <button class="filter-btn" style="--cat-color:#555" onclick="toggleCatFilter('Other',this)">📌 Other</button>
+        </div>
+      </div>
+      <div class="filter-group">
+        <span class="filter-group-label">Search</span>
+        <input type="text" id="table-search" placeholder="Search by title or name..." oninput="renderTables()"/>
+      </div>
+    </div>
+
+    <!-- ACTIVE EVENTS TABLE -->
+    <div class="table-section">
+      <div class="table-header">
+        <h2>🟢 Active Events <span id="active-count" class="count-badge">0</span></h2>
+      </div>
+      <div class="table-wrap">
+        <table id="active-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Posted By</th>
+              <th>Posted At</th>
+              <th>Expires In</th>
+              <th>Location</th>
+            </tr>
+          </thead>
+          <tbody id="active-tbody"></tbody>
+        </table>
+        <p id="active-empty" class="empty-msg" style="display:none">
+          No active events found.
+        </p>
+      </div>
+    </div>
+
+    <!-- EXPIRED EVENTS TABLE -->
+    <div class="table-section">
+      <div class="table-header expired-header">
+        <h2>🔴 Expired Events <span id="expired-count" class="count-badge expired-badge">0</span></h2>
+      </div>
+      <div class="table-wrap">
+        <table id="expired-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Posted By</th>
+              <th>Posted At</th>
+              <th>Expired At</th>
+              <th>Location</th>
+            </tr>
+          </thead>
+          <tbody id="expired-tbody"></tbody>
+        </table>
+        <p id="expired-empty" class="empty-msg" style="display:none">
+          No expired events yet.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+  <script src="events.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>NearNow — Register</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="auth-page">
+  <div class="auth-box">
+    <div class="auth-logo">NEARNOW</div>
+    <p class="auth-sub">Create your account</p>
+    <input type="text" id="username" placeholder="Username"/>
+    <input type="email" id="email" placeholder="Email"/>
+    <input type="password" id="password" placeholder="Password"/>
+    <button onclick="register()">Register</button>
+    <p class="auth-link">Already have an account? <a href="login.html">Login</a></p>
+    <p id="msg"></p>
+  </div>
+  <script>
+    async function register() {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: document.getElementById('username').value,
+          email:    document.getElementById('email').value,
+          password: document.getElementById('password').value
+        })
+      });
+      const data = await res.json();
+      const msg = document.getElementById('msg');
+      if (res.ok) {
+        msg.style.color = 'green';
+        msg.textContent = 'Registered! Redirecting to login...';
+        setTimeout(() => window.location.href = 'login.html', 1500);
+      } else {
+        msg.style.color = 'red';
+        msg.textContent = data.error;
+      }
+    }
+  </script>
+</body>
+</html>

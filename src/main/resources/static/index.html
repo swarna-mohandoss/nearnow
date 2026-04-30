@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NearNow — Live Event Map</title>
+<link rel="stylesheet"
+	href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet"
+	href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+	<!-- HEADER -->
+	<div id="brand">
+		<h1>
+			NEAR<span>NOW</span>
+		</h1>
+		<span id="live-badge">● LIVE</span> <span id="user-count">👥 1</span>
+		<button class="logout-btn" onclick="logout()">Logout</button>
+	</div>
+
+	<!-- MAIN -->
+	<div id="main">
+
+		<!-- SIDEBAR -->
+		<div id="sidebar">
+
+			<!-- Search -->
+			<div id="search-section">
+				<div id="search-box">
+					<input type="text" id="search-input"
+						placeholder="🔍 Search a place..." />
+					<button id="search-btn" onclick="searchPlace()">Go</button>
+				</div>
+				<div id="search-results"></div>
+			</div>
+
+			<!-- Form -->
+			<!-- Form -->
+			<div id="form-section">
+				<p class="section-title">Post an Event</p>
+				<input type="text" id="title" placeholder="Event title"
+					maxlength="60" />
+				<textarea id="description" placeholder="What's happening?" rows="2"></textarea>
+				<div class="form-row">
+					<select id="category">
+						<option value="Music">🎵 Music</option>
+						<option value="Food">🍔 Food</option>
+						<option value="Sports">⚽ Sports</option>
+						<option value="Meetup">🤝 Meetup</option>
+						<option value="Art">🎨 Art</option>
+						<option value="Other">📌 Other</option>
+					</select> <input type="text" id="createdBy" placeholder="Your name" />
+				</div>
+				<label class="field-label">Event Date & Time</label> <input
+					type="datetime-local" id="eventDateTime" />
+				<button id="pin-btn" onclick="startPinDrop()">📍 Drop a Pin</button>
+				<p id="pin-hint" style="display: none">Click anywhere on the map
+					to place your event</p>
+				<a href="events.html" style="text-decoration: none">
+					<button id="events-page-btn">📋 View All Events</button>
+				</a>
+			</div>
+
+		</div>
+
+		<!-- RESIZER -->
+		<div id="resizer"></div>
+
+		<!-- MAP -->
+		<div id="map"></div>
+
+	</div>
+
+	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+	<script
+		src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+	<script src="app.js"></script>
+	<script>
+    if (!localStorage.getItem('nearnow_user')) {
+      window.location.href = 'login.html';
+    }
+
+    // Sidebar resizer
+    const resizer = document.getElementById('resizer');
+    const sidebar = document.getElementById('sidebar');
+    let isResizing = false;
+
+    resizer.addEventListener('mousedown', (e) => {
+      isResizing = true;
+      resizer.classList.add('dragging');
+      document.body.style.cursor = 'col-resize';
+      document.body.style.userSelect = 'none';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isResizing) return;
+      const newWidth = e.clientX;
+      if (newWidth >= 260 && newWidth <= 700) {
+        sidebar.style.width = newWidth + 'px';
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      isResizing = false;
+      resizer.classList.remove('dragging');
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+      if (window.dispatchEvent) window.dispatchEvent(new Event('resize'));
+    });
+  </script>
+</body>
+</html>

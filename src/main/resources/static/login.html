@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>NearNow — Login</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="auth-page">
+  <div class="auth-box">
+    <div class="auth-logo">NEARNOW</div>
+    <p class="auth-sub">Welcome back</p>
+    <input type="text" id="username" placeholder="Username"/>
+    <input type="password" id="password" placeholder="Password"/>
+    <button onclick="login()">Login</button>
+    <p class="auth-link">No account? <a href="register.html">Register</a></p>
+    <p id="msg"></p>
+  </div>
+  <script>
+    async function login() {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: document.getElementById('username').value,
+          password: document.getElementById('password').value
+        })
+      });
+      const data = await res.json();
+      const msg = document.getElementById('msg');
+      if (res.ok) {
+        localStorage.setItem('nearnow_user', data.username);
+        msg.style.color = 'green';
+        msg.textContent = 'Login successful! Redirecting...';
+        setTimeout(() => window.location.href = 'index.html', 1000);
+      } else {
+        msg.style.color = 'red';
+        msg.textContent = data.error;
+      }
+    }
+  </script>
+</body>
+</html>
