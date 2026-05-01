@@ -1,4 +1,5 @@
 # 🗺️ NearNow — Real-Time Live Event Map
+### 🌐 Live Demo: [https://nearnow-f9ms.onrender.com](https://nearnow-f9ms.onrender.com)
 
 NearNow is a full-stack real-time web application that lets users discover and post live events happening around them on an interactive map. Events appear instantly for all connected users via WebSocket — no page refresh needed.
 
